@@ -12,7 +12,6 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 :root{
-  /* Базовая палитра из 1группа.html */
   --p:#6366f1;
   --p2:#8b5cf6;
   --p3:#a78bfa;
@@ -79,7 +78,6 @@ body{
 }
 @keyframes gridMove{to{background-position:60px 60px}}
 
-/* Aurora */
 .aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 .aurora-beam{
   position:absolute;
@@ -93,7 +91,6 @@ body{
 }
 @keyframes auroraRotate{to{transform:rotate(360deg)}}
 
-/* Progress bar */
 .progress-bar{
   position:fixed;top:0;left:0;height:3px;
   background:linear-gradient(90deg,var(--p),var(--p2),var(--acc));
@@ -227,16 +224,32 @@ p{font-size:1.05rem;color:var(--text-3)}
   animation:pulse 2s ease infinite;
 }
 
+/* ↓↓↓ ИСПРАВЛЕНО: заголовок без разрыва слов и без прилипания «к» ↓↓↓ */
 .hero h1{
   background:linear-gradient(135deg,#fff 0%,#e0e7ff 30%,#c4b5fd 60%,#a78bfa 100%);
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent;
   margin-bottom:28px;
-  letter-spacing:-.04em;
+  letter-spacing:-.03em;
   animation:titleIn 1.2s var(--ease) .2s both;
+
+  /* Размер подобран так, чтобы «фундаментального» влезало целиком */
+  font-size:clamp(1rem, 6.5vw, 3.6rem);
+  line-height:1.2;
+  padding:0 4px;
+  max-width:100%;
+  text-wrap:balance;
 }
 @keyframes titleIn{from{opacity:0}to{opacity:1}}
+
+/* Управляемый перенос строки: <br class="br-mobile"> показывается только на мобильных */
+.br-mobile{display:none}
+
+@media(max-width:640px){
+  .br-mobile{display:inline}
+}
+/* ↑↑↑ ИСПРАВЛЕНО ↑↑↑ */
 
 .hero__sub{
   font-size:clamp(15px,2.4vw,18px);
@@ -322,6 +335,16 @@ p{font-size:1.05rem;color:var(--text-3)}
   50%{transform:scaleY(1);transform-origin:top}
   51%{transform:scaleY(1);transform-origin:bottom}
   100%{transform:scaleY(0);transform-origin:bottom}
+}
+
+/* На мобильных прячем индикатор скролла */
+@media(max-width:640px){
+  .hero__scroll{display:none;}
+}
+/* На планшетах — прижимаем ниже */
+@media(min-width:641px) and (max-width:900px){
+  .hero__scroll{bottom:24px;}
+  .hero__scroll-line{height:28px;}
 }
 
 /* ===================== SECTION HEADER ===================== */
@@ -1130,7 +1153,7 @@ p{font-size:1.05rem;color:var(--text-3)}
 @media(max-width:768px){
   section{padding:80px 0}
   .container{padding:0 20px}
-  .hero{padding:100px 20px 80px}
+  .hero{padding:100px 20px 80px;min-height:auto}
   .flow-node{min-width:auto;width:100%;padding:16px 20px}
   .flow-node--split{min-width:auto}
   .final__inner{padding:64px 28px;border-radius:32px}
@@ -1164,7 +1187,6 @@ p{font-size:1.05rem;color:var(--text-3)}
 <nav class="side-nav" id="sideNav">
   <button class="side-nav__dot" data-target="slide-1" data-label="Начало"></button>
   <button class="side-nav__dot" data-target="slide-2" data-label="Цель и задачи"></button>
-  <button class="side-nav__dot" data-target="slide-3" data-label="Материалы"></button>
   <button class="side-nav__dot" data-target="slide-4" data-label="Модель"></button>
   <button class="side-nav__dot" data-target="slide-5" data-label="Научная школа"></button>
   <button class="side-nav__dot" data-target="slide-6" data-label="Трансформация"></button>
@@ -1182,7 +1204,9 @@ p{font-size:1.05rem;color:var(--text-3)}
       Группа 1 · Наука и СТП
     </div>
 
-    <h1>От фундаментального задела<br>к прорывному продукту</h1>
+    <!-- ↓↓↓ ИСПРАВЛЕНО: управляемый перенос строки для мобильных ↓↓↓ -->
+    <h1>От фундаментального<br>задела<br class="br-mobile">к прорывному продукту</h1>
+    <!-- ↑↑↑ ИСПРАВЛЕНО ↑↑↑ -->
 
     <p class="hero__sub">
       Модель превращения научных гипотез и практического задела ВМА
